@@ -16,12 +16,6 @@ lvim.colorscheme = "tokyodark"
 -- lvim.use_icons = false
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
-lvim.leader = "space"
--- add your own keymapping
-lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
-lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
-lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
-
 
 -- unmap a default keymapping
 -- vim.keymap.del("n", "<C-Up>")
@@ -45,20 +39,6 @@ lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 --     ["<C-k>"] = actions.move_selection_previous,
 --   },
 -- }
-
--- Use which-key to add extra bindings with the leader-key prefix
--- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
--- lvim.builtin.which_key.mappings["t"] = {
---   name = "+Trouble",
---   r = { "<cmd>Trouble lsp_references<cr>", "References" },
---   f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
---   d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
---   q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
---   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
---   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
--- }
--- TODO: User Config for predefined plugins
--- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
@@ -85,7 +65,6 @@ lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enabled = true
 
 -- generic LSP settings
-
 -- -- make sure server will always be installed even if the server is in skipped_servers list
 -- lvim.lsp.installer.setup.ensure_installed = {
 --     "sumeko_lua",
@@ -99,7 +78,6 @@ lvim.builtin.treesitter.highlight.enabled = true
 --     uninstall_server = "d",
 --     toggle_server_expand = "o",
 -- }
-
 -- ---@usage disable automatic installation of servers
 -- lvim.lsp.installer.setup.automatic_installation = false
 
@@ -169,10 +147,11 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- }
 
 lvim.plugins = {
-  "tiagovla/tokyodark.nvim"
+  "tiagovla/tokyodark.nvim",
+   -- "folke/trouble.nvim"
 }
-
-
+-- local trouble = require "custom.trouble"
+-- require"trouble".setup(trouble)
 
 local alphaDashBoard = require "custom.alphaDashBoard"
 lvim.builtin.alpha.active = true
@@ -181,10 +160,29 @@ lvim.builtin.alpha = {
   active = true,
   mode = "dashboard",
 }
-
 require ("custom.keymappings")
 require ("custom.options")
+lvim.leader = "space"
+-- add your own keymapping
+lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
+lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
+lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 
+-- Use which-key to add extra bindings with the leader-key prefix
+lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+lvim.builtin.which_key.mappings["c"] = { ":noh<CR>", "No Higlight" }
+lvim.builtin.which_key.mappings["c"] = { ":bp<Space><bar><Space>sp<Space><bar><Space>bn<Space><bar>bd<CR>", "Close current buffer" }
+lvim.builtin.which_key.mappings["t"] = {
+  name = "+Trouble",
+  r = { "<cmd>Trouble lsp_reeences<cr>", "References" },
+  f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+  d = { "<cmd>Trouble documnt_diagnostics<cr>", "Diagnostics" },
+  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+  l = { "<cmd>Trouble loclist<cr>", "LocationList" },
+  w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
+}
+-- TODO: User Config for predefined plugins
+-- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- vim.api.nvim_create_autocmd("BufEnter", {
 --   pattern = { "*.json", "*.jsonc" },
