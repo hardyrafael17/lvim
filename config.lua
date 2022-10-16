@@ -18,7 +18,6 @@ lvim.colorscheme = "tokyodark"
 -- keymappings [view all the defaults by pressing <leader>Lk]
 
 -- unmap a default keymapping
--- vim.keymap.del("n", "<C-Up>")
 -- override a default keymapping
 -- lvim.keys.normal_mode["<C-q>"] = ":q<cr>" -- or vim.keymap.set("n", "<C-q>", ":q<cr>" )
 
@@ -167,11 +166,10 @@ lvim.leader = "space"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
-
+lvim.keys.insert_mode["kk"] = "<Esc>"
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
-lvim.builtin.which_key.mappings["c"] = { ":noh<CR>", "No Higlight" }
-lvim.builtin.which_key.mappings["c"] = { ":bp<Space><bar><Space>sp<Space><bar><Space>bn<Space><bar>bd<CR>", "Close current buffer" }
+lvim.builtin.which_key.mappings["q"] = { ":bp<Space><bar><Space>sp<Space><bar><Space>bn<Space><bar>bd<CR>", "Close current buffer" }
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Trouble",
   r = { "<cmd>Trouble lsp_reeences<cr>", "References" },
@@ -181,6 +179,9 @@ lvim.builtin.which_key.mappings["t"] = {
   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
 }
+-- Unmapped keybindings
+--vim.keymap.del("i", "<Tab>")
+
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
