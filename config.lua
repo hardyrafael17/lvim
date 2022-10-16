@@ -1,7 +1,7 @@
 --[[
 lvim is the global options object
 
-LLinters should be
+Linters should be
 filled in as strings with either
 a global executable or a path to
 an executable
@@ -16,8 +16,13 @@ lvim.colorscheme = "tokyodark"
 -- lvim.use_icons = false
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
-
+lvim.leader = "space"
+-- add your own keymapping
+lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
+-- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
+-- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 -- unmap a default keymapping
+-- vim.keymap.del("n", "<C-Up>")
 -- override a default keymapping
 -- lvim.keys.normal_mode["<C-q>"] = ":q<cr>" -- or vim.keymap.set("n", "<C-q>", ":q<cr>" )
 
@@ -39,10 +44,37 @@ lvim.colorscheme = "tokyodark"
 --   },
 -- }
 
+-- Change theme settings
+-- lvim.builtin.theme.options.dim_inactive = true
+-- lvim.builtin.theme.options.style = "storm"
+
+-- Use which-key to add extra bindings with the leader-key prefix
+-- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
+-- lvim.builtin.which_key.mappings["t"] = {
+--   name = "+Trouble",
+--   r = { "<cmd>Trouble lsp_references<cr>", "References" },
+--   f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+--   d = { "<cmd>Trouble document_diagnostics<cr>", "Diagnostics" },
+--   q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+--   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
+--   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
+-- }
+
+-- TODO: User Config for predefined plugins
+-- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
+local alphaDashBoard = require "custom.alphaDashBoard"
+lvim.builtin.alpha.active = true
+lvim.builtin.alpha = {
+  dashboard = { config = {}, section = alphaDashBoard.get_sections() },
+  active = true,
+  mode = "dashboard",
+}
+lvim.builtin.notify.active = true
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
+lvim.builtin.nvimtree.setup.view.width = 55
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
@@ -61,12 +93,13 @@ lvim.builtin.treesitter.ensure_installed = {
 }
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
-lvim.builtin.treesitter.highlight.enabled = true
+lvim.builtin.treesitter.highlight.enable = true
 
 -- generic LSP settings
+
 -- -- make sure server will always be installed even if the server is in skipped_servers list
 -- lvim.lsp.installer.setup.ensure_installed = {
---     "sumeko_lua",
+--     "sumneko_lua",
 --     "jsonls",
 -- }
 -- -- change UI setting of `LspInstallInfo`
@@ -77,6 +110,7 @@ lvim.builtin.treesitter.highlight.enabled = true
 --     uninstall_server = "d",
 --     toggle_server_expand = "o",
 -- }
+
 -- ---@usage disable automatic installation of servers
 -- lvim.lsp.installer.setup.automatic_installation = false
 
@@ -138,28 +172,33 @@ lvim.builtin.treesitter.highlight.enabled = true
 
 -- Additional Plugins
 -- lvim.plugins = {
---     {"folke/tokyonight.nvim"},
 --     {
 --       "folke/trouble.nvim",
 --       cmd = "TroubleToggle",
 --     },
 -- }
-
 lvim.plugins = {
   "tiagovla/tokyodark.nvim",
    -- "folke/trouble.nvim"
 }
--- local trouble = require "custom.trouble"
--- require"trouble".setup(trouble)
 
-local alphaDashBoard = require "custom.alphaDashBoard"
-lvim.builtin.alpha.active = true
-lvim.builtin.alpha = {
-  dashboard = { config = {}, section = alphaDashBoard.get_sections() },
-  active = true,
-  mode = "dashboard",
-}
-require ("custom.keymappings")
+-- Autocommands (https://neovim.io/doc/user/autocmd.html)
+-- vim.api.nvim_create_autocmd("BufEnter", {
+--   pattern = { "*.json", "*.jsonc" },
+--   -- enable wrap mode for json files only
+--   command = "setlocal wrap",
+-- })
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = "zsh",
+--   callback = function()
+--     -- let treesitter use bash highlight for zsh files as well
+--     require("nvim-treesitter.highlight").attach(0, "bash")
+--   end,
+-- })
+
+-- add your own keymapping
+lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
+
 require ("custom.options")
 lvim.leader = "space"
 -- add your own keymapping
@@ -179,24 +218,4 @@ lvim.builtin.which_key.mappings["t"] = {
   l = { "<cmd>Trouble loclist<cr>", "LocationList" },
   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Workspace Diagnostics" },
 }
--- Unmapped keybindings
---vim.keymap.del("i", "<Tab>")
 
--- TODO: User Config for predefined plugins
--- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
--- Autocommands (https://neovim.io/doc/user/autocmd.html)
--- vim.api.nvim_create_autocmd("BufEnter", {
---   pattern = { "*.json", "*.jsonc" },
---   -- enable wrap mode for json files only
---   command = "setlocal wrap",
--- })
--- vim.api.nvim_create_autocmd("FileType", {
---   pattern = "zsh",
---   callback = function()
---     -- let treesitter use bash highlight for zsh files as well
---     require("nvim-treesitter.highlight").attach(0, "bash")
---   end,
--- })
---Custom options from looking ad current config
---lvim.core.gitsigns.opts.current_line_blame = true
---lvim.core.which_key.c = {}
