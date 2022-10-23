@@ -206,6 +206,7 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
 lvim.keys.insert_mode["kk"] = "<Esc>"
+lvim.keys.insert_mode["jj"] = "<Esc>"
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 lvim.builtin.which_key.mappings["q"] = { ":bp<Space><bar><Space>sp<Space><bar><Space>bn<Space><bar>bd<CR>", "Close current buffer" }
